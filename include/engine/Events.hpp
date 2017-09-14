@@ -2,6 +2,7 @@
 #define EVENTM_H
 
 #include <queue>
+#include <list>
 #include <string>
 #include <functional>
 
@@ -24,7 +25,7 @@ class EventBus
         void post(Event e);
         void notify();
     private:
-        std::function<void (Event)> listeners;
+        std::list<std::function<void (Event)>> listeners;
         std::queue<Event> events;
 };
 

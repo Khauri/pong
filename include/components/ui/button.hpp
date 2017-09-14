@@ -5,9 +5,14 @@
 #define UI_BTN_H
 
 #include "engine/Actor.hpp"
+#include "engine/Events.hpp"
 
 class Button: public Actor{
-    Button(MessageBus* bus) : Actor(bus){};
+    public: 
+        Button(EventBus* bus) : Actor(bus){};
+//        ~Button();
+        enum states {ACTIVE, INACTIVE, SELECTED, PRESSED};
+        void init();
 };
 
 #endif

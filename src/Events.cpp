@@ -4,13 +4,29 @@
 
 #include "engine/Events.hpp"
 
-Event::Event(const std::string m){ message = m; };
-std::string Event::getMessage(){ return message };
+Event::Event(const std::string m)
+{ 
+    message = m; 
+};
+std::string Event::getMessage()
+{ 
+    return message; 
+};
 
 EventBus::EventBus(){};
+
 EventBus::~EventBus(){};
-void EventBus::addEventListener(std::function<void (Event)> listener){ listeners.push_back(listener) };
-void EventBus::post(Event e){ events.push(e) };
+
+void EventBus::addEventListener(std::function<void (Event)> listener)
+{ 
+    listeners.push_back(listener); 
+};
+
+void EventBus::post(Event e)
+{ 
+    events.push(e); 
+};
+
 void EventBus::notify()
 {
     while(!events.empty()) {
@@ -19,4 +35,4 @@ void EventBus::notify()
         }
         events.pop();
     }
-}
+};
