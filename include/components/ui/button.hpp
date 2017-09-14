@@ -1,10 +1,13 @@
 /**
 * Button Class
 */
+#ifndef UI_BTN_H
+#define UI_BTN_H
 
-#ifndef UI_BTN
-#define UI_BTN
+#include "engine/Actor.hpp"
 
-void hello();
+class Button: public Actor{
+    Button(MessageBus* bus) : Actor(bus){};
+};
 
 #endif
