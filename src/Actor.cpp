@@ -4,8 +4,10 @@
 #include <functional>
 #include <list>
 #include <memory>
+
 Actor::Actor()
 {
+    
 };
 
 void Actor::update(int delta)
@@ -31,6 +33,7 @@ void Actor::render(sf::RenderWindow* ctx)
 void Actor::addChild(std::shared_ptr<Actor> a)
 {
     // initialize the child
+    a->game = game;
     a->init();
     // add the child to the list
     this->children.push_back(a);

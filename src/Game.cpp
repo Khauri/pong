@@ -20,17 +20,20 @@ void Game::start()
     {
         delta += clock.restart().asMilliseconds();
         // process events
+        // TODO: Move to another function
         sf::Event Event;
         while(window.pollEvent(Event))
         {
-            // Exit
-            if(Event.type == sf::Event::Closed)
-            window.close();
+            switch(Event.type){
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+            }
         }
         
         if(delta < 1000.0/(this->fpsTarget)) continue;
         
-        // clear screen and fill with red
+        // clear the screen
         window.clear(sf::Color::Black);
         // perform user updates
         this->onUpdate(delta);
@@ -39,7 +42,7 @@ void Game::start()
         this->currScreen->update(delta);
         // display
         this->currScreen->render(&window);
-        
+
         window.display();
 
         // reset time since last frame
@@ -52,6 +55,7 @@ void Game::start()
 void Game::goToScreen(std::shared_ptr<Actor> s)
 {
     //this->prevScreen = this->currScreen;
+    s->game = this;
     s->init();
     this->currScreen = s;
     std::cout << "added screen" << std::endl;

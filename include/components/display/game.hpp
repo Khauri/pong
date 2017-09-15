@@ -21,6 +21,8 @@ typedef struct
 
 class Game{
     public:
+        sf::RenderWindow window;
+        EventBus ebus;
         void start();
         void stop();
         void exit();
@@ -33,10 +35,7 @@ class Game{
         void setSize(int w, int y);
         bool toggleFullScreen();
     protected:
-        sf::RenderWindow window;
-        EventBus ebus;
         std::shared_ptr<Actor> currScreen;
-        //std::shared_ptr<Screen> prevScreen;
     private: 
         float fpsTarget = 60;
         float actualFps;

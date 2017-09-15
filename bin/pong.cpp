@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <memory>
+#include "engine/AABB.hpp"
 #include "engine/Events.hpp"
 #include "engine/Actor.hpp"
 #include "components/ui/button.hpp"
@@ -19,13 +20,15 @@
 class MainMenuScreen: public Actor
 {
   public: 
-    //std::shared_ptr<Button> sing = std::make_shared<Button>();
-    //std::shared_ptr<Button> mult = std::make_shared<Button>();
-    std::shared_ptr<Button> opts = std::make_shared<Button>();
+    std::shared_ptr<Button> sing = std::make_shared<Button>(AABB(100.0f, 200.0f, 500.0f, 50.0f), "SINGLEPLAYER");
+    std::shared_ptr<Button> mult = std::make_shared<Button>(AABB(100.0f, 300.0f, 500.0f, 50.0f), "MULTIPLAYER");
+    std::shared_ptr<Button> opts = std::make_shared<Button>(AABB(100.0f, 400.0f, 500.0f, 50.0f), "OPTIONS");
     void init()
     {
       //this->addChild(sing);
       //this->addChild(mult);
+      this->addChild(sing);
+      this->addChild(mult);
       this->addChild(opts);
     }
 
@@ -70,8 +73,7 @@ class PongGame: public Game
 
 int main(int argc, char** argv)
 {
-  PongGame* p = new PongGame;
-  p->start();
-  delete p;
+  PongGame p;
+  p.start();
   return 0;
 }
