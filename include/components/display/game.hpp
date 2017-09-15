@@ -10,7 +10,6 @@
 #include <memory>
 #include "engine/Actor.hpp"
 #include "engine/Events.hpp"
-#include "components/display/screen.hpp"
 
 typedef struct
 {
@@ -26,9 +25,9 @@ class Game{
         void stop();
         void exit();
         virtual void onUpdate(int delta){};
-        void gotoScreen(Screen* s);
+        void goToScreen(Actor* s);
         // init is automatically called when game is started
-        void init(){};
+        virtual void init(){};
         // TODO
         void setResizable(bool r);
         void setSize(int w, int y);
@@ -36,7 +35,7 @@ class Game{
     protected:
         sf::RenderWindow window;
         EventBus ebus;
-        Screen* currScreen;
+        Actor* currScreen;
         //std::shared_ptr<Screen> prevScreen;
     private: 
         BOX windowProps {0,0,800,600};

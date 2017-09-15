@@ -9,10 +9,6 @@ Actor::Actor()
     EventBus bus;
     this->ebus = &bus;
 };
-Actor::Actor(EventBus *bus)
-{
-    this->ebus = bus;
-};
 
 void Actor::update(int delta)
 {
@@ -28,4 +24,9 @@ void Actor::update(int delta)
 void Actor::addChild(actor_ptr a)
 {
     this->children.push_back(a);
+};
+
+void Actor::addEventBus(EventBus* bus)
+{
+    this->ebus = bus;
 };

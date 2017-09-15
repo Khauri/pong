@@ -8,9 +8,9 @@
 #include "engine/Events.hpp"
 
 class Button: public Actor{
-    public: 
-        Button(EventBus* bus) : Actor(bus){};
-//        ~Button();
+    public:
+        Button();
+        ~Button();
         enum states {ACTIVE, INACTIVE, SELECTED, PRESSED};
         void init();
 };

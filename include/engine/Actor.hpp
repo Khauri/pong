@@ -20,19 +20,21 @@ class Actor
     public:
         typedef std::shared_ptr<Actor> actor_ptr;
         Actor();
-        Actor(EventBus* bus);
-        virtual void init();
+        virtual void init(){};
         // user's update method
         virtual void onUpdate(int delta){};
         // internal update
-        virtual void update(int delta);
-        virtual void render(){};
+        void update(int delta);
+        void render(){};
+        // setters
+        void setPosition(sf::Vector2i p);
     protected:
         std::list<actor_ptr> children;
         std::shared_ptr<Actor> parent;
         const EventBus* ebus;
         void dispatchEvent();
         virtual void onEvent(){};
+        void addEventBus(EventBus* bus);
         // these may need to be virtual
         void addChild(actor_ptr a);
 };

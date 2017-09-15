@@ -8,7 +8,7 @@
 #include "engine/Events.hpp"
 #include "components/ui/button.hpp"
 #include "components/display/game.hpp"
-#include "components/display/screen.hpp"
+#include "engine/Actor.hpp"
 
 // create the paddle actor class
 
@@ -17,11 +17,9 @@
 // create buttons
 
 // create menu screen
-class MainMenuScreen: public Screen
+class MainMenuScreen: public Actor
 {
   public: 
-    MainMenuScreen() : Screen() {};
-
     void init()
     {
       // create some buttons and some text
@@ -33,7 +31,7 @@ class MainMenuScreen: public Screen
     }
 };
 // create game screen
-class GameScreen: public Screen
+class GameScreen: public Actor
 {
   public:
     void init()
@@ -51,15 +49,16 @@ class PongGame: public Game
   public:
     void onUpdate(int delta)
     {
-      std::cout << "updating game" << std::endl;
+      //std::cout << "updating game" << std::endl;
     }
 
     void init()
     {
+        std::cout << "initializing game" << std::endl;
         // add the all the shit
-        MainMenuScreen m;
+        //MainMenuScreen m;
         GameScreen g;
-        this->gotoScreen(&g);
+        this->goToScreen(&g);
     }
 };
 

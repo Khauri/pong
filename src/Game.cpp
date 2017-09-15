@@ -5,6 +5,7 @@
 
 void Game::start()
 {
+  std::cout << "Starting Game" << std::endl;
   this->init();  
   window.create(sf::VideoMode(this->windowProps.width, this->windowProps.height), "Pong");
   // start main loop
@@ -24,7 +25,7 @@ void Game::start()
     // perform user updates
     this->onUpdate(0);
     // update current screen (exits without error(?))
-    std::cout << currScreen->num << std::endl;
+    //std::cout << currScreen->num << std::endl;
     this->currScreen->update(0);
     // display
     window.display();
@@ -33,8 +34,9 @@ void Game::start()
 
 // for now just switches the two screens with no 
 // transition 
-void Game::gotoScreen(Screen* s)
+void Game::goToScreen(Actor* s)
 {
     //this->prevScreen = this->currScreen;
     this->currScreen = s;
+    std::cout << "added screen" << std::endl;
 }
