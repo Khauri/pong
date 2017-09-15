@@ -25,7 +25,7 @@ class Game{
         void stop();
         void exit();
         virtual void onUpdate(int delta){};
-        void goToScreen(Actor* s);
+        void goToScreen(std::shared_ptr<Actor> s);
         // init is automatically called when game is started
         virtual void init(){};
         // TODO
@@ -35,9 +35,11 @@ class Game{
     protected:
         sf::RenderWindow window;
         EventBus ebus;
-        Actor* currScreen;
+        std::shared_ptr<Actor> currScreen;
         //std::shared_ptr<Screen> prevScreen;
     private: 
+        float fpsTarget = 60;
+        float actualFps;
         BOX windowProps {0,0,800,600};
 };
 

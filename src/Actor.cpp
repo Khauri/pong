@@ -6,24 +6,35 @@
 #include <memory>
 Actor::Actor()
 {
-    EventBus bus;
-    this->ebus = &bus;
 };
 
 void Actor::update(int delta)
 {
-    std::cout << "updating actor" << std::endl;
+    // call user-defined update method
     this->onUpdate(delta);
-    // loop through children
+    // call update method of all children
     for (auto a = children.begin(); a != children.end(); a++) {
-        // call child update function
         (*a)->update(delta);
     }
 };
 
-void Actor::addChild(actor_ptr a)
+void Actor::render(sf::RenderWindow* ctx)
 {
+    // call user-defined render method
+    this->onRender(ctx);
+    // call render function of all children
+    for(auto a = children.begin(); a != children.end(); a++){
+        (*a)->render(ctx);
+    }
+}
+
+void Actor::addChild(std::shared_ptr<Actor> a)
+{
+    // initialize the child
+    a->init();
+    // add the child to the list
     this->children.push_back(a);
+    std::cout << "Adding a child" << std::endl;
 };
 
 void Actor::addEventBus(EventBus* bus)

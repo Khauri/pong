@@ -15,28 +15,28 @@
 
 class Actor
 {
-    // TODO: find a way to skip supplying MessageBus
-    //       perhaps by using a factory(?)
+    private:
+        sf::Vector2f pos;
+        const EventBus* ebus;
     public:
-        typedef std::shared_ptr<Actor> actor_ptr;
         Actor();
         virtual void init(){};
         // user's update method
-        virtual void onUpdate(int delta){};
+        virtual void onUpdate(int delta) = 0;
+        virtual void onRender(sf::RenderWindow* ctx) {};
         // internal update
         void update(int delta);
-        void render(){};
+        void render(sf::RenderWindow* ctx);
         // setters
         void setPosition(sf::Vector2i p);
+        void addChild(std::shared_ptr<Actor> a);
     protected:
-        std::list<actor_ptr> children;
+        std::list<std::shared_ptr<Actor>> children;
         std::shared_ptr<Actor> parent;
-        const EventBus* ebus;
         void dispatchEvent();
         virtual void onEvent(){};
         void addEventBus(EventBus* bus);
         // these may need to be virtual
-        void addChild(actor_ptr a);
 };
 
 #endif
