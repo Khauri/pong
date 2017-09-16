@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "engine/Actor.hpp"
+#include "engine/GameObj.hpp"
 #include "engine/Events.hpp"
 
 typedef struct
@@ -27,17 +27,20 @@ class Game{
         void stop();
         void exit();
         virtual void onUpdate(int delta){};
-        void goToScreen(std::shared_ptr<Actor> s);
+        void goToScreen(std::shared_ptr<GameObj> s);
         // init is automatically called when game is started
         virtual void init(){};
-        // TODO
+        // TODO (in due time)
         void setResizable(bool r);
         void setSize(int w, int y);
+        void setDebugMode(bool b);
+        bool getDebugMode();
         bool toggleFullScreen();
     protected:
-        std::shared_ptr<Actor> currScreen;
-    private: 
-        float fpsTarget = 60;
+        bool debug = false;
+        std::shared_ptr<GameObj> currScreen;
+        virtual void onExit(){};
+        float fpsTarget = 60.0;
         float actualFps;
         BOX windowProps {0,0,800,600};
 };

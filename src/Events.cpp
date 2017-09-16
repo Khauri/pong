@@ -8,6 +8,7 @@ Event::Event(const std::string m)
 { 
     message = m; 
 };
+
 std::string Event::getMessage()
 { 
     return message; 
@@ -22,7 +23,7 @@ void EventBus::addEventListener(std::function<void (Event)> listener)
     listeners.push_back(listener); 
 };
 
-void EventBus::post(Event e)
+void EventBus::postEvent(Event e)
 { 
     events.push(e); 
 };

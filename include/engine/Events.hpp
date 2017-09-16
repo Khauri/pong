@@ -1,3 +1,8 @@
+/**
+* Basic EventBus system adapted from this tutorial:
+* http://www.seanballais.com/blog/implementing-a-simple-message-bus-in-cpp/
+*/
+
 #ifndef EVENTM_H
 #define EVENTM_H
 
@@ -22,7 +27,7 @@ class EventBus
         ~EventBus();
         void addEventListener(std::function<void (Event)> listener);
         //void removeEventListener();
-        void post(Event e);
+        void postEvent(Event e);
         void notify();
     private:
         std::list<std::function<void (Event)>> listeners;

@@ -1,17 +1,13 @@
-#include <SFML/Graphics.hpp>
-#include "components/display/game.hpp"
+#include "engine/Game.hpp"
 #include <iostream>
-#include <memory>
 
 void Game::start()
 {
-    std::cout << "Starting Game" << std::endl;
-
+    fpsTarget = 1000.00/fpsTarget;
     sf::Clock clock;
     int delta = 0;
 
     this->init();  
-
     // create game window
     window.create(sf::VideoMode(this->windowProps.width, this->windowProps.height), "Pong");
     
@@ -26,12 +22,15 @@ void Game::start()
         {
             switch(Event.type){
                 case sf::Event::Closed:
-                    window.close();
+                    this->exit();
                     break;
             }
         }
         
-        if(delta < 1000.0/(this->fpsTarget)) continue;
+        if(delta < fpsTarget) continue;
+        
+        // notify of all events that took place last frame
+        ebus.notify();
         
         // clear the screen
         window.clear(sf::Color::Black);
@@ -50,13 +49,29 @@ void Game::start()
     }
 }
 
+// perform exit rituals and game cleanup
+void Game::exit()
+{
+    this->onExit();
+    window.close();
+}
+
 // for now just switches the two screens with no 
 // transition 
-void Game::goToScreen(std::shared_ptr<Actor> s)
+void Game::goToScreen(std::shared_ptr<GameObj> s)
 {
-    //this->prevScreen = this->currScreen;
     s->game = this;
+    s->addEventBus(&ebus);
     s->init();
     this->currScreen = s;
-    std::cout << "added screen" << std::endl;
+}
+
+void Game::setDebugMode(bool b)
+{
+    this->debug = b;
+}
+
+bool Game::getDebugMode()
+{
+    return this->debug;
 }

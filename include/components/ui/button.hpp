@@ -7,29 +7,24 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
-#include "engine/AABB.hpp"
-#include "engine/Actor.hpp"
-#include "engine/Events.hpp"
+#include <memory>
+#include "engine/Engine.hpp"
+#include "components/ui/text.hpp"
 
-class Button: public Actor{
+class Button: public GameObj
+{
     private:
-        bool mouseover;
-        bool mousedown;
-        sf::Text btnText;
-        sf::Font btnFont;
-        std::string fontName;
-        std::string text;
+        std::shared_ptr<BasicText> label;
     public:
         Button();
-        Button(AABB b, std::string t) : Actor(b), text(t){};
+        Button(std::shared_ptr<BasicText> l) : label(l){};
         //~Button();
-        enum states {ACTIVE, INACTIVE, SELECTED, PRESSED};
-        // do later? Sure
-        void setText(std::string text);
+        void setLabel(std::shared_ptr<BasicText> l);
         // user's methods
         void init();
         void onUpdate(int delta);
         void onRender(sf::RenderWindow* ctx);
+        void onEvent(Event e);
 };
 
 #endif
