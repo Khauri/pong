@@ -47,8 +47,9 @@ class Ball: public GameObj
       ctx->draw(ball);
     }
     // bounce the ball in x direction
+    // increase the speed slightly
     void bounceX(){
-      vel.x *= -1;
+      vel.x *= -1.01;
     }
 
     void bounceY()
@@ -75,7 +76,7 @@ class Ball: public GameObj
   private:
     sf::CircleShape ball;
     sf::Vector2f vel;
-    float velMult = .075;
+    float velMult = .1;
     int radius = 10;
 };
 
@@ -83,7 +84,7 @@ class Ball: public GameObj
 class Paddle: public GameObj
 {
   private:
-    float speed = 0.25;
+    float speed = 0.1;
     std::shared_ptr<Ball> ball;
     bool isAIControlled = false;
     sf::RectangleShape paddle;
@@ -103,16 +104,29 @@ class Paddle: public GameObj
     }
     void onUpdate(int delta)
     {
+      // check collision of ball
+      if(this->bounds.isCollision(ball->getBounds())){
+        ball->bounceX();
+      }
       if(isAIControlled){
         AABB bPos = ball->getBounds();
-
+        if(bPos.y < bounds.y ){
+          if(this->bounds.y <= 0){
+            return;
+          }
+          this->bounds.move(0, -speed);
+        }else{
+          if(this->bounds.y + this->bounds.h >= 600){
+            return;
+          }
+          this->bounds.move(0, speed);
+        }
       }
       else if(sf::Keyboard::isKeyPressed(upKey)){
         if(this->bounds.y <= 0){
           return;
         }
         this->bounds.move(0, -speed);
-        paddle.setPosition(bounds.x, bounds.y);
       }
       else if(sf::Keyboard::isKeyPressed(downKey)){
         if(this->bounds.y + this->bounds.h >= 600){
@@ -121,10 +135,6 @@ class Paddle: public GameObj
         this->bounds.move(0, speed);
       }
       paddle.setPosition(bounds.x, bounds.y);
-      // check collision of ball
-      if(this->bounds.isCollision(ball->getBounds())){
-        ball->bounceX();
-      }
     }
 
     void onRender(sf::RenderWindow* ctx)
