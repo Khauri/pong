@@ -4,12 +4,12 @@
 
 #include "engine/Events.hpp"
 
-Event::Event(const std::string m)
+BasicEvent::BasicEvent(const std::string m)
 { 
     message = m; 
 };
 
-std::string Event::getMessage()
+std::string BasicEvent::getMessage()
 { 
     return message; 
 };
@@ -18,12 +18,12 @@ EventBus::EventBus(){};
 
 EventBus::~EventBus(){};
 
-void EventBus::addEventListener(std::function<void (Event)> listener)
+void EventBus::addEventListener(std::function<void (BasicEvent)> listener)
 { 
     listeners.push_back(listener); 
 };
 
-void EventBus::postEvent(Event e)
+void EventBus::postEvent(BasicEvent e)
 { 
     events.push(e); 
 };

@@ -45,10 +45,10 @@ class GameObj
         sf::Vector2f pos;
         std::list<std::shared_ptr<GameObj>> children;
         std::shared_ptr<GameObj> parent;
-        void dispatchEvent(Event e);
+        void dispatchEvent(BasicEvent e);
         void addEventBus(EventBus* bus);
-        std::function<void (Event)> getListener();
-        virtual void onEvent(Event e){};
+        std::function<void (BasicEvent)> getListener();
+        virtual void onEvent(BasicEvent e){};
 };
 
 #include "engine/Game.hpp"

@@ -11,10 +11,13 @@
 #include <string>
 #include <functional>
 
-class Event
+class BasicEvent
 {
     public: 
-        Event(const std::string m);
+        int x;
+        int y;
+        BasicEvent(const std::string m);
+        BasicEvent(const std::string m, int xpos, int ypos) : message(m), x(xpos), y(ypos){};
         std::string getMessage();
     private:
         std::string message;
@@ -25,13 +28,13 @@ class EventBus
     public:
         EventBus();
         ~EventBus();
-        void addEventListener(std::function<void (Event)> listener);
+        void addEventListener(std::function<void (BasicEvent)> listener);
         //void removeEventListener();
-        void postEvent(Event e);
+        void postEvent(BasicEvent e);
         void notify();
     private:
-        std::list<std::function<void (Event)>> listeners;
-        std::queue<Event> events;
+        std::list<std::function<void (BasicEvent)>> listeners;
+        std::queue<BasicEvent> events;
 };
 
 #endif

@@ -6,6 +6,17 @@ BasicText::BasicText() : GameObj()
     str = "Undefined";
 };
 
+void BasicText::setText(std::string s)
+{
+    str = s;
+    text.setString(s);
+}
+
+std::string BasicText::getText()
+{
+    return str;
+}
+
 void BasicText::init()
 {   
     

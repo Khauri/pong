@@ -17,14 +17,14 @@ class Button: public GameObj
         std::shared_ptr<BasicText> label;
     public:
         Button();
-        Button(std::shared_ptr<BasicText> l) : label(l){};
+        Button(std::shared_ptr<BasicText> l, AABB box);
         //~Button();
         void setLabel(std::shared_ptr<BasicText> l);
         // user's methods
         void init();
         void onUpdate(int delta);
         void onRender(sf::RenderWindow* ctx);
-        void onEvent(Event e);
+        void onEvent(BasicEvent e);
 };
 
 #endif

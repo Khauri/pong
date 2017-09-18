@@ -46,14 +46,14 @@ void GameObj::addEventBus(EventBus* bus)
     this->ebus->addEventListener(this->getListener());
 };
 
-void GameObj::dispatchEvent(Event e)
+void GameObj::dispatchEvent(BasicEvent e)
 {
     ebus->postEvent(e);
 };
 
-std::function<void (Event)> GameObj::getListener()
+std::function<void (BasicEvent)> GameObj::getListener()
 {
-    auto listener = [=](Event e) -> void {
+    auto listener = [=](BasicEvent e) -> void {
         this->onEvent(e);
     };
     return listener;
@@ -62,4 +62,9 @@ std::function<void (Event)> GameObj::getListener()
 void GameObj::setBounds(AABB b)
 {
     this->bounds = b;
+}
+
+AABB GameObj::getBounds()
+{
+    return this->bounds;
 }

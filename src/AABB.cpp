@@ -27,6 +27,13 @@ void AABB::setHeight(float h)
     this->h = h;
 }
 
+bool AABB::isCollision(AABB box)
+{
+    return x < box.x + box.w && 
+        x + w > box.x &&
+        y < box.y + box.w &&
+        h + y > box.y;
+}
 
 bool AABB::intersects(AABB box)
 {

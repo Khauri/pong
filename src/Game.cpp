@@ -1,20 +1,24 @@
-#include "engine/Game.hpp"
 #include <iostream>
+#include "engine/Game.hpp"
+#include "engine/Events.hpp"
 
 void Game::start()
 {
-    fpsTarget = 1000.00/fpsTarget;
+    double fps = 60.0;
+    sf::Vector2i mousePos;
+    this->ebus.addEventListener(this->getListener());
     sf::Clock clock;
-    int delta = 0;
+    int delta;
 
     this->init();  
     // create game window
-    window.create(sf::VideoMode(this->windowProps.width, this->windowProps.height), "Pong");
+    window.create(sf::VideoMode(this->windowProps.width, this->windowProps.height), "Pong", sf::Style::Titlebar | sf::Style::Close);
     
     // start main loop
     while(window.isOpen())
     {
-        delta += clock.restart().asMilliseconds();
+        delta = clock.restart().asMilliseconds();
+        mousePos = sf::Mouse::getPosition(window);
         // process events
         // TODO: Move to another function
         sf::Event Event;
@@ -24,11 +28,12 @@ void Game::start()
                 case sf::Event::Closed:
                     this->exit();
                     break;
+                case sf::Event::MouseButtonReleased:
+                    this->ebus.postEvent(BasicEvent("MOUSEUP", mousePos.x, mousePos.y));
+                    break;
             }
         }
-        
-        if(delta < fpsTarget) continue;
-        
+
         // notify of all events that took place last frame
         ebus.notify();
         
@@ -75,3 +80,16 @@ bool Game::getDebugMode()
 {
     return this->debug;
 }
+
+void Game::dispatchEvent(BasicEvent e)
+{
+    ebus.postEvent(e);
+};
+
+std::function<void (BasicEvent)> Game::getListener()
+{
+    auto listener = [=](BasicEvent e) -> void {
+        this->onEvent(e);
+    };
+    return listener;
+};

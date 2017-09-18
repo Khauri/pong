@@ -19,6 +19,7 @@ class BasicText: public GameObj
         BasicText(std::string t, std::shared_ptr<sf::Font> f) : str(t), font(f){};
         //~BasicText();
         void setText(std::string t);
+        std::string getText();
         void setVerticalAlign(ALIGN a);
         void setHorizontalAlign(ALIGN a);
         // user's methods

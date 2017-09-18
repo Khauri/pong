@@ -36,7 +36,11 @@ class Game{
         void setDebugMode(bool b);
         bool getDebugMode();
         bool toggleFullScreen();
+        virtual void onEvent(BasicEvent e){};
+        void dispatchEvent(BasicEvent e);
+        std::function<void (BasicEvent)> getListener();
     protected:
+        bool mousedown = false;
         bool debug = false;
         std::shared_ptr<GameObj> currScreen;
         virtual void onExit(){};
